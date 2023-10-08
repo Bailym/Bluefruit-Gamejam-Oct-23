@@ -41,3 +41,15 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Background
+    uniqueID: 353679119
+    locked: 0
+  - name: Midground 1
+    uniqueID: 3737575477
+    locked: 0
+  - name: Midground 2
+    uniqueID: 4057964551
+    locked: 0
+  - name: Foreground
+    uniqueID: 3974755685
+    locked: 0
