@@ -48,7 +48,7 @@ GameObject:
   - component: {fileID: 6990175565462500105}
   - component: {fileID: 5524296344995270941}
   - component: {fileID: 7923483106679239420}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Angled Roof Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -157,7 +157,7 @@ GameObject:
   - component: {fileID: 6854416270088737952}
   - component: {fileID: 5651785502377436970}
   - component: {fileID: 6524789145507667361}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Wall Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -265,7 +265,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1155283883305047702}
   - component: {fileID: 2194209970766996921}
-  m_Layer: 0
+  - component: {fileID: 446493626407737265}
+  m_Layer: 7
   m_Name: Divider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -280,8 +281,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3428030114865708220}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.4332, y: 8.817614, z: 1}
+  m_LocalPosition: {x: 0, y: -3, z: 0}
+  m_LocalScale: {x: 0.69299, y: 3.1963851, z: 1}
   m_Children: []
   m_Father: {fileID: 2750857640991719675}
   m_RootOrder: 6
@@ -337,6 +338,32 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!61 &446493626407737265
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3428030114865708220}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
 --- !u!1 &7943423116741463644
 GameObject:
   m_ObjectHideFlags: 0
@@ -457,7 +484,7 @@ GameObject:
   - component: {fileID: 7943423116743265254}
   - component: {fileID: 7943423116743265255}
   - component: {fileID: 3078393857467870726}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Wall Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -566,7 +593,7 @@ GameObject:
   - component: {fileID: 7943423117195577153}
   - component: {fileID: 7943423117195577158}
   - component: {fileID: 7258637144687852453}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Angled Roof Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -675,7 +702,7 @@ GameObject:
   - component: {fileID: 7943423117859556961}
   - component: {fileID: 7943423117859556966}
   - component: {fileID: 6987783137276789526}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Flat Roof
   m_TagString: Untagged
   m_Icon: {fileID: 0}
