@@ -1,23 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine.InputSystem;
+using UnityEditorInternal;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
     private Rigidbody2D playerBody;
-    public float speed = 2.5f;
-    public float jumpHeight = 5f;
-    public Transform groundCheck;
-    public Transform leftCheck;
-    public Transform rightCheck;
+    public float speed = 250f;
+    public float jumpHeight = 300f;
+    private BoxCollider2D playerOffsetCollider;
     public LayerMask groundLayer;
     public LayerMask wallsLayer;
-    public float environmentCheckRadius = 0.05f;
-    private bool jumpPressed = false;
+    private bool doJump = false;
+    private bool isGrabbingWall = false;
     private bool isGrounded = false;
-    private bool isAgainstWallOnLeft = false;
-    private bool isAgainstWallOnRight = false;
+    private bool isAgainstWall = false;
 
     private PlayerActions playerActions;
 
@@ -39,6 +34,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         playerBody = GetComponent<Rigidbody2D>();
+        playerOffsetCollider = GetComponent<BoxCollider2D>();
     }
 
     void FixedUpdate()
@@ -51,17 +47,46 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         GetEnvironmentChecks();
-        if (playerActions.PlayerMap.Jump.triggered && isGrounded)
-        {
-            jumpPressed = true;
-        }
+        UpdatePlayerState();
     }
 
     void GetEnvironmentChecks()
     {
-        isGrounded = Physics2D.OverlapCircle(groundCheck.position, environmentCheckRadius, groundLayer);
-        isAgainstWallOnLeft = Physics2D.OverlapCircle(leftCheck.position, environmentCheckRadius, wallsLayer);
-        isAgainstWallOnRight = Physics2D.OverlapCircle(rightCheck.position, environmentCheckRadius, wallsLayer);
+        isGrounded = playerOffsetCollider.IsTouchingLayers(groundLayer);
+        isAgainstWall = playerOffsetCollider.IsTouchingLayers(wallsLayer);
+    }
+
+    void UpdatePlayerState()
+    {
+         bool jumpInputPressed = playerActions.PlayerMap.Jump.triggered;
+         bool grabInputPressed = playerActions.PlayerMap.Grab.triggered;
+
+        if(!isAgainstWall)
+        {
+            isGrabbingWall = false;
+        }
+
+        if(isGrounded && !isAgainstWall)
+        {
+            isGrabbingWall = false;
+        }
+
+        if (jumpInputPressed && isGrounded)
+        {
+            doJump = true;
+        }
+
+        if (grabInputPressed && !isGrounded && isAgainstWall)
+        {
+            isGrabbingWall = true;
+            isGrounded = true;
+        }
+        
+        if(isAgainstWall && isGrabbingWall && jumpInputPressed)
+        {
+            doJump = true;
+            isGrabbingWall = false;
+        }
     }
 
     Vector2 GetNewHorizontalVelocity()
@@ -69,18 +94,8 @@ public class PlayerController : MonoBehaviour
         Vector2 newHorizontalVelocity = playerBody.velocity;
         Vector2 horizontalInput = playerActions.PlayerMap.Movement.ReadValue<Vector2>();
 
-        bool isMovingTowardsWallOnLeft = horizontalInput.x < 0 && isAgainstWallOnLeft;
-        bool isMovingTowardsWallOnRight = horizontalInput.x > 0 && isAgainstWallOnRight;
-
-        if(isMovingTowardsWallOnLeft || isMovingTowardsWallOnRight)
-        {
-            newHorizontalVelocity.x = 0;
-        }
-        else
-        {
-            newHorizontalVelocity.x = horizontalInput.x * speed;
-        }
-
+        newHorizontalVelocity.x = horizontalInput.x * speed * Time.deltaTime;
+        
         return newHorizontalVelocity;
     }
 
@@ -88,11 +103,21 @@ public class PlayerController : MonoBehaviour
     {
         Vector2 newVerticalVelocity = playerBody.velocity;
 
-        if (jumpPressed)
+        if (doJump)
         {
-            newVerticalVelocity.y = jumpHeight;
-            jumpPressed = false;
+            newVerticalVelocity.y = jumpHeight * Time.deltaTime;
+            doJump = false;
         }
+
+        if (isGrabbingWall)
+        {
+            newVerticalVelocity.y = 0;
+        }
+        else
+        {
+            newVerticalVelocity.y += Physics2D.gravity.y * Time.deltaTime;
+        }
+        
 
         return newVerticalVelocity;
     }
