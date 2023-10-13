@@ -6,9 +6,9 @@ public class PlayerCombatHandler : MonoBehaviour
     public GameObject mainProjectile;
     private PlayerInputHandler playerInputs;
 
-    public void FireMainProjectile()
+    public void FireMainProjectile(Vector2 startPosition)
     {
-        Instantiate(mainProjectile, transform.position, quaternion.identity);
+        Instantiate(mainProjectile, startPosition, quaternion.identity);
     }
 
     void Start()
@@ -19,7 +19,8 @@ public class PlayerCombatHandler : MonoBehaviour
     {
         if (playerInputs.GetFireInputPressed())
         {
-            FireMainProjectile();
+            Vector2 projectileStartPosition = playerInputs.GetPointDirection();
+            FireMainProjectile(projectileStartPosition);
         }
     }
 }

@@ -1,33 +1,40 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerInputHandler : MonoBehaviour
 {
-    private PlayerActions playerActions;
+    private InputActionMap playerActionMap;
     private bool jumpInputPressed;
     private bool grabInputPressed;
     private bool fireInputPressed;
 
+    private Vector2 pointDirection;
+
     void Awake()
     {
-        playerActions = new PlayerActions();
+        playerActionMap = GetComponent<PlayerInput>().currentActionMap;
     }
 
     void OnEnable()
     {
-        playerActions.PlayerMap.Enable();
+        playerActionMap.Enable();
+        playerActionMap.FindAction("Point").
     }
 
     void OnDisable()
     {
-        playerActions.PlayerMap.Disable();
+        playerActionMap.Disable();
     }
 
     void ReadPlayerInputs()
     {
-        jumpInputPressed = playerActions.PlayerMap.Jump.triggered;
-        grabInputPressed = playerActions.PlayerMap.Grab.triggered;
-        fireInputPressed = playerActions.PlayerMap.Fire.triggered;
+        jumpInputPressed = playerActionMap.FindAction("Jump").triggered;
+        grabInputPressed = playerActionMap.FindAction("Grab").triggered;
+        fireInputPressed = playerActionMap.FindAction("Fire").triggered;
+        pointDirection = playerActionMap.FindAction("Point").ReadValue<Vector2>();
+        Debug.Log(pointDirection);
     }
+    
 
     void Update()
     {
@@ -51,6 +58,11 @@ public class PlayerInputHandler : MonoBehaviour
 
     public Vector2 GetHorizontalInput()
     {
-        return playerActions.PlayerMap.Movement.ReadValue<Vector2>();
+        return playerActionMap.FindAction("Movement").ReadValue<Vector2>();
+    }
+
+    public Vector2 GetPointDirection()
+    {
+        return pointDirection;
     }
 }
