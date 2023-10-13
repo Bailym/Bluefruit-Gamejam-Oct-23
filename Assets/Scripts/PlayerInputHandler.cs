@@ -18,7 +18,6 @@ public class PlayerInputHandler : MonoBehaviour
     void OnEnable()
     {
         playerActionMap.Enable();
-        playerActionMap.FindAction("Point").
     }
 
     void OnDisable()
