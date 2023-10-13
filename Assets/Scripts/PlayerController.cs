@@ -13,23 +13,7 @@ public class PlayerController : MonoBehaviour
     private bool isGrabbingWall = false;
     private bool isGrounded = false;
     private bool isAgainstWall = false;
-
-    private PlayerActions playerActions;
-
-    void Awake()
-    {
-        playerActions = new PlayerActions();
-    }
-
-    void OnEnable()
-    {
-        playerActions.PlayerMap.Enable();
-    }
-
-    void OnDisable()
-    {
-        playerActions.PlayerMap.Disable();
-    }
+    public PlayerInputHandler playerInputs;
 
     void Start()
     {
@@ -58,9 +42,6 @@ public class PlayerController : MonoBehaviour
 
     void UpdatePlayerState()
     {
-         bool jumpInputPressed = playerActions.PlayerMap.Jump.triggered;
-         bool grabInputPressed = playerActions.PlayerMap.Grab.triggered;
-
         if(!isAgainstWall)
         {
             isGrabbingWall = false;
@@ -71,28 +52,33 @@ public class PlayerController : MonoBehaviour
             isGrabbingWall = false;
         }
 
-        if (jumpInputPressed && isGrounded)
+        if (playerInputs.GetJumpInputPressed() && isGrounded)
         {
             doJump = true;
         }
 
-        if (grabInputPressed && !isGrounded && isAgainstWall)
+        if (playerInputs.GetGrabInputPressed() && !isGrounded && isAgainstWall)
         {
             isGrabbingWall = true;
             isGrounded = true;
         }
         
-        if(isAgainstWall && isGrabbingWall && jumpInputPressed)
+        if(isAgainstWall && isGrabbingWall && playerInputs.GetJumpInputPressed())
         {
             doJump = true;
             isGrabbingWall = false;
+        }
+
+        if (playerInputs.GetShootInputPressed())
+        {
+
         }
     }
 
     Vector2 GetNewHorizontalVelocity()
     {
         Vector2 newHorizontalVelocity = playerBody.velocity;
-        Vector2 horizontalInput = playerActions.PlayerMap.Movement.ReadValue<Vector2>();
+        Vector2 horizontalInput = playerInputs.GetHorizontalInput();
 
         newHorizontalVelocity.x = horizontalInput.x * speed * Time.deltaTime;
         

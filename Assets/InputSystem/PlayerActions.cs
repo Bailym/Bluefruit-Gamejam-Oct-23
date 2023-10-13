@@ -41,6 +41,14 @@ public class @PlayerActions : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Fire"",
+                    ""type"": ""Button"",
+                    ""id"": ""f026dd34-b2c9-4f21-86fe-f21dc3e8a0f4"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -175,6 +183,28 @@ public class @PlayerActions : IInputActionCollection, IDisposable
                     ""action"": ""Grab"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""129038ae-e7dc-4a8f-8fb4-fba8bddd01bb"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Fire"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""aa7928ef-218d-43b1-8574-9b4f2612edd5"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Fire"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -186,6 +216,7 @@ public class @PlayerActions : IInputActionCollection, IDisposable
         m_PlayerMap_Movement = m_PlayerMap.FindAction("Movement", throwIfNotFound: true);
         m_PlayerMap_Jump = m_PlayerMap.FindAction("Jump", throwIfNotFound: true);
         m_PlayerMap_Grab = m_PlayerMap.FindAction("Grab", throwIfNotFound: true);
+        m_PlayerMap_Fire = m_PlayerMap.FindAction("Fire", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -238,6 +269,7 @@ public class @PlayerActions : IInputActionCollection, IDisposable
     private readonly InputAction m_PlayerMap_Movement;
     private readonly InputAction m_PlayerMap_Jump;
     private readonly InputAction m_PlayerMap_Grab;
+    private readonly InputAction m_PlayerMap_Fire;
     public struct PlayerMapActions
     {
         private @PlayerActions m_Wrapper;
@@ -245,6 +277,7 @@ public class @PlayerActions : IInputActionCollection, IDisposable
         public InputAction @Movement => m_Wrapper.m_PlayerMap_Movement;
         public InputAction @Jump => m_Wrapper.m_PlayerMap_Jump;
         public InputAction @Grab => m_Wrapper.m_PlayerMap_Grab;
+        public InputAction @Fire => m_Wrapper.m_PlayerMap_Fire;
         public InputActionMap Get() { return m_Wrapper.m_PlayerMap; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -263,6 +296,9 @@ public class @PlayerActions : IInputActionCollection, IDisposable
                 @Grab.started -= m_Wrapper.m_PlayerMapActionsCallbackInterface.OnGrab;
                 @Grab.performed -= m_Wrapper.m_PlayerMapActionsCallbackInterface.OnGrab;
                 @Grab.canceled -= m_Wrapper.m_PlayerMapActionsCallbackInterface.OnGrab;
+                @Fire.started -= m_Wrapper.m_PlayerMapActionsCallbackInterface.OnFire;
+                @Fire.performed -= m_Wrapper.m_PlayerMapActionsCallbackInterface.OnFire;
+                @Fire.canceled -= m_Wrapper.m_PlayerMapActionsCallbackInterface.OnFire;
             }
             m_Wrapper.m_PlayerMapActionsCallbackInterface = instance;
             if (instance != null)
@@ -276,6 +312,9 @@ public class @PlayerActions : IInputActionCollection, IDisposable
                 @Grab.started += instance.OnGrab;
                 @Grab.performed += instance.OnGrab;
                 @Grab.canceled += instance.OnGrab;
+                @Fire.started += instance.OnFire;
+                @Fire.performed += instance.OnFire;
+                @Fire.canceled += instance.OnFire;
             }
         }
     }
@@ -285,5 +324,6 @@ public class @PlayerActions : IInputActionCollection, IDisposable
         void OnMovement(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnGrab(InputAction.CallbackContext context);
+        void OnFire(InputAction.CallbackContext context);
     }
 }
