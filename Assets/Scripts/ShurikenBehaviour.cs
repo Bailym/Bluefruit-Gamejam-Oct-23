@@ -13,12 +13,6 @@ public class ShurikenBehaviour : MonoBehaviour
         StartCoroutine("DestroyShurikenAfterTimeToLive");
     }
 
-    // Update is called once per frame
-    void FixedUpdate()
-    {
-        
-    }
-
     IEnumerator DestroyShurikenAfterTimeToLive()
     {
         yield return new WaitForSeconds(timeToLiveSeconds);

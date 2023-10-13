@@ -1,3 +1,4 @@
+using Unity.Mathematics;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -12,12 +13,16 @@ public class PlayerController : MonoBehaviour
     private bool isGrabbingWall = false;
     private bool isGrounded = false;
     private bool isAgainstWall = false;
-    public PlayerInputHandler playerInputs;
+    private  PlayerInputHandler playerInputs;
+    private PlayerCombatHandler playerCombat;
+
+
 
     void Start()
     {
         playerBody = GetComponent<Rigidbody2D>();
         playerOffsetCollider = GetComponent<BoxCollider2D>();
+        playerInputs = GetComponent<PlayerInputHandler>();
     }
 
     void FixedUpdate()
@@ -66,11 +71,6 @@ public class PlayerController : MonoBehaviour
         {
             doJump = true;
             isGrabbingWall = false;
-        }
-
-        if (playerInputs.GetShootInputPressed())
-        {
-
         }
     }
 

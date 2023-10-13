@@ -5,7 +5,7 @@ public class PlayerInputHandler : MonoBehaviour
     private PlayerActions playerActions;
     private bool jumpInputPressed;
     private bool grabInputPressed;
-    private bool shootInputPressed;
+    private bool fireInputPressed;
 
     void Awake()
     {
@@ -26,7 +26,7 @@ public class PlayerInputHandler : MonoBehaviour
     {
         jumpInputPressed = playerActions.PlayerMap.Jump.triggered;
         grabInputPressed = playerActions.PlayerMap.Grab.triggered;
-        shootInputPressed = playerActions.PlayerMap.Fire.triggered;
+        fireInputPressed = playerActions.PlayerMap.Fire.triggered;
     }
 
     void Update()
@@ -44,9 +44,9 @@ public class PlayerInputHandler : MonoBehaviour
         return grabInputPressed;
     }
 
-    public bool GetShootInputPressed()
+    public bool GetFireInputPressed()
     {
-        return shootInputPressed;
+        return fireInputPressed;
     }
 
     public Vector2 GetHorizontalInput()
