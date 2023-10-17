@@ -182,7 +182,7 @@
                 {
                     "name": "",
                     "id": "30af512a-5e5b-475f-aee6-65ce796188f1",
-                    "path": "<Pointer>/radius",
+                    "path": "<Mouse>/position",
                     "interactions": "",
                     "processors": "",
                     "groups": "Mouse And Keyboard",

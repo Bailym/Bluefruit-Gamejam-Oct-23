@@ -4,23 +4,35 @@ using UnityEngine;
 public class PlayerCombatHandler : MonoBehaviour
 {
     public GameObject mainProjectile;
+    private ProjectileBehaviour mainProjectileBehaviour;
     private PlayerInputHandler playerInputs;
-
-    public void FireMainProjectile(Vector2 startPosition)
-    {
-        Instantiate(mainProjectile, startPosition, quaternion.identity);
-    }
 
     void Start()
     {
         playerInputs = GetComponent<PlayerInputHandler>();
+        mainProjectileBehaviour = mainProjectile.GetComponent<ProjectileBehaviour>();
     }
+
     void Update()
     {
         if (playerInputs.GetFireInputPressed())
         {
-            Vector2 projectileStartPosition = playerInputs.GetPointDirection();
-            FireMainProjectile(projectileStartPosition);
+            float projectileAngleRadians = CalculateProjectileAngle();
+            FireMainProjectile(transform.position, projectileAngleRadians);
         }
+    }
+
+    float CalculateProjectileAngle()
+    {
+        Vector2 mouseWorldPosition = FindObjectOfType<Camera>().ScreenToWorldPoint(playerInputs.GetPointDirection());
+        Vector2 playerCurrentPosition = transform.position;
+        return Mathf.Atan2(mouseWorldPosition.y - playerCurrentPosition.y, mouseWorldPosition.x - playerCurrentPosition.x);
+    }
+
+    public void FireMainProjectile(Vector2 startPosition, float travelAngleRadians)
+    {
+        GameObject projectileObject = Instantiate(mainProjectile, startPosition, quaternion.identity);
+        Rigidbody2D projectileObjectBody = projectileObject.GetComponent<Rigidbody2D>();
+        projectileObjectBody.velocity = mainProjectileBehaviour.travelSpeed * new Vector2(Mathf.Cos(travelAngleRadians), Mathf.Sin(travelAngleRadians));
     }
 }

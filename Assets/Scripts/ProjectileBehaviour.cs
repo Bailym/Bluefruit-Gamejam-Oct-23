@@ -1,19 +1,18 @@
 using System.Collections;
 using UnityEngine;
 
-public class ShurikenBehaviour : MonoBehaviour
+public class ProjectileBehaviour : MonoBehaviour
 {
-
     public int timeToLiveSeconds = 5;
+    public float travelSpeed = 20f;
 
-    private Rigidbody2D shurikenBody;
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine("DestroyShurikenAfterTimeToLive");
+        StartCoroutine("DestroyProjectileAfterTimeToLive");
     }
 
-    IEnumerator DestroyShurikenAfterTimeToLive()
+    IEnumerator DestroyProjectileAfterTimeToLive()
     {
         yield return new WaitForSeconds(timeToLiveSeconds);
         Destroy(gameObject);

@@ -31,7 +31,6 @@ public class PlayerInputHandler : MonoBehaviour
         grabInputPressed = playerActionMap.FindAction("Grab").triggered;
         fireInputPressed = playerActionMap.FindAction("Fire").triggered;
         pointDirection = playerActionMap.FindAction("Point").ReadValue<Vector2>();
-        Debug.Log(pointDirection);
     }
     
 

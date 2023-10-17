@@ -14,9 +14,6 @@ public class PlayerController : MonoBehaviour
     private bool isGrounded = false;
     private bool isAgainstWall = false;
     private  PlayerInputHandler playerInputs;
-    private PlayerCombatHandler playerCombat;
-
-
 
     void Start()
     {
