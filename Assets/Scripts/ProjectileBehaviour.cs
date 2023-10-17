@@ -6,6 +6,8 @@ public class ProjectileBehaviour : MonoBehaviour
     public int timeToLiveSeconds = 5;
     public float travelSpeed = 20f;
 
+    private int projectileOwnerId;
+
     void Start()
     {
         GameObject dividerObject = GameObject.FindGameObjectWithTag("Divider");
@@ -17,5 +19,15 @@ public class ProjectileBehaviour : MonoBehaviour
     {
         yield return new WaitForSeconds(timeToLiveSeconds);
         Destroy(gameObject);
+    }
+
+    public void SetprojectileOwnerId(int id)
+    {
+        projectileOwnerId = id;
+    }
+
+    public int GetprojectileOwnerId()
+    {
+        return projectileOwnerId;
     }
 }
