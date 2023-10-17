@@ -63,4 +63,9 @@ public class PlayerInputHandler : MonoBehaviour
     {
         return pointDirection;
     }
+
+    public string GetCurrentControlScheme()
+    {
+        return GetComponent<PlayerInput>().currentControlScheme;
+    }
 }
