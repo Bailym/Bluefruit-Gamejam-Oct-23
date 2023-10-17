@@ -6,9 +6,10 @@ public class ProjectileBehaviour : MonoBehaviour
     public int timeToLiveSeconds = 5;
     public float travelSpeed = 20f;
 
-    // Start is called before the first frame update
     void Start()
     {
+        GameObject dividerObject = GameObject.FindGameObjectWithTag("Divider");
+        Physics2D.IgnoreCollision(GetComponent<CircleCollider2D>(), dividerObject.GetComponent<BoxCollider2D>());
         StartCoroutine("DestroyProjectileAfterTimeToLive");
     }
 
